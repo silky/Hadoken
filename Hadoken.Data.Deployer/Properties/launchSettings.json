@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Hadoken.Data.Deployer": {
+      "commandName": "Project",
+      "commandLineArgs": "-d True"
+    }
+  }
+}
