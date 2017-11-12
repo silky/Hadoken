@@ -11,7 +11,13 @@ namespace Hadoken.Data.Migrations
     {
         public override void Apply()
         {
-            //  ExecuteResource("");
+            //  Tables
+            ExecuteResource("Public.Group.sql");
+            ExecuteResource("Public.Element.sql");
+
+            //  Data
+            ExecuteResource("Groups.sql");
+            ExecuteResource("Elements.sql");
         }
     }
 }

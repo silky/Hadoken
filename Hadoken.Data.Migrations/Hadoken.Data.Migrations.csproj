@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Scripts\" />
+    <None Remove="Elements.sql" />
+    <None Remove="Public.Element.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Elements.sql" />
+    <EmbeddedResource Include="Groups.sql" />
+    <EmbeddedResource Include="Public.Element.sql" />
+    <EmbeddedResource Include="Public.Group.sql" />
   </ItemGroup>
 
   <ItemGroup>
