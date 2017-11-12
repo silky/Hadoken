@@ -1,7 +1,6 @@
 ﻿#region Using References
 
 using System;
-using System.Data.Common;
 
 #endregion
 
@@ -17,15 +16,7 @@ namespace Hadoken.Data.Migrations
         {
             if (String.IsNullOrEmpty(name) == false)
             {
-                //  using (StreamReader streamReader = new StreamReader(_assembly.GetManifestResourceStream(name)))
-                //  {
-                //      string resource = streamReader.ReadToEnd();
-                //  
-                //      if (String.IsNullOrEmpty(resource) == false)
-                //      {
-                //  
-                //      }
-                //  }
+                MigrationRunner.ExecuteResource(name);
             }
         }
 

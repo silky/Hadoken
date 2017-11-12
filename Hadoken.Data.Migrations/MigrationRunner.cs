@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.IO;
+using Hadoken.Core.Logging;
 
 #endregion
 
 namespace Hadoken.Data.Migrations
 {
-    public class MigrationRunner
+    public class MigrationRunner : IDisposable
     {
         static MigrationRunner()
         {
@@ -25,7 +26,7 @@ namespace Hadoken.Data.Migrations
             _dbConnection = dbConnection;
         }
 
-        private readonly DbConnection _dbConnection;
+        private static DbConnection _dbConnection;
 
         private static readonly Assembly _assembly;
 
@@ -70,8 +71,6 @@ namespace Hadoken.Data.Migrations
             {
                 StringBuilder stringBuilder = new StringBuilder();
 
-                stringBuilder.AppendLine($"DROP TABLE IF EXISTS {MigrationSchemaName}.{MigrationTableName};");
-
                 stringBuilder.AppendLine($"CREATE TABLE IF NOT EXISTS {MigrationSchemaName}.{MigrationTableName}");
                 stringBuilder.AppendLine("(");
                 stringBuilder.AppendLine("    ID serial NOT NULL PRIMARY KEY,");
@@ -84,6 +83,19 @@ namespace Hadoken.Data.Migrations
 
                 dbCommand.CommandText = stringBuilder.ToString();
                 dbCommand.ExecuteNonQuery();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_dbConnection != null)
+            {
+                if (_dbConnection.State != ConnectionState.Closed)
+                {
+                    _dbConnection.Close();
+                }
+
+                _dbConnection.Dispose();
             }
         }
 
@@ -104,14 +116,22 @@ namespace Hadoken.Data.Migrations
                 .ToList()
                 .ForEach(m => migrations.Add((Migration)(_assembly.CreateInstance(m.FullName))));
 
-            foreach (Migration migration in migrations.Where(m => (m != null)))
+            migrations = migrations.Where(m => (m != null)).ToList();
+
+            OutputStreams.WriteLine($"Found {migrations.Count} migrations.");
+
+            foreach (Migration migration in migrations)
             {
                 MigrationAttribute migrationAttribute = migration.GetType().GetCustomAttributes().OfType<MigrationAttribute>().FirstOrDefault();
+
+                OutputStreams.WriteLine($"Found migration {migrationAttribute.Value}");
 
                 if ((migrationAttribute.Value > migrationState) && (migrationAttribute.IsIgnore == false))
                 {
                     try
                     {
+                        OutputStreams.WriteLine($"Applying migration {migrationAttribute.Value}...");
+
                         migration.Apply();
 
                         migrationState = BumpMigrationState();
@@ -122,6 +142,10 @@ namespace Hadoken.Data.Migrations
 
                         throw;
                     }
+                }
+                else
+                {
+                    OutputStreams.WriteLine($"Skipping migration {migrationAttribute.Value}...");
                 }
             }
         }
@@ -142,6 +166,22 @@ namespace Hadoken.Data.Migrations
             }
 
             return getMigrationState;
+        }
+
+        internal static void ExecuteResource(string name)
+        {
+            if (String.IsNullOrEmpty(name) == false)
+            {
+                using (StreamReader streamReader = new StreamReader(_assembly.GetManifestResourceStream($"Hadoken.Data.Migrations.{name}")))
+                {
+                    string resource = streamReader.ReadToEnd();
+
+                    if (String.IsNullOrEmpty(resource) == false)
+                    {
+                        Database.ExecuteNonQuery(_dbConnection, resource);
+                    }
+                }
+            }
         }
     }
 }

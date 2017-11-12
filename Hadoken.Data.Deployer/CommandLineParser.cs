@@ -10,21 +10,28 @@ namespace Hadoken.Data.Deployer
 {
     internal class CommandLineParser
     {
-        public CommandLineParser(string[] arguments)
+        public CommandLineParser(string applicationName, string[] arguments)
         {
+            List<string> argumentList = arguments.ToList();
+
+            if ((argumentList.Count > 0) && (argumentList[0] == applicationName))
+            {
+                argumentList = argumentList.Skip(1).ToList();
+            }
+
             _commandLineParts = new List<CommandLinePart>();
 
-            if ((arguments != null) && (arguments.Length > 0) && (arguments.Length % 2 == 0))
+            if ((argumentList.Count > 0) && (argumentList.Count % 2 == 0))
             {
                 //  -d
                 //  True
 
-                for (int i = 0, j = 1; i < (arguments.Length / 2); i++, j++)
+                for (int i = 0, j = 1; i < (argumentList.Count / 2); i++, j++)
                 {
-                    if (arguments[i].StartsWith("-") == true)
+                    if (argumentList[i].StartsWith("-") == true)
                     {
-                        string key = arguments[i].Substring(1).Trim().ToUpper();
-                        string value = arguments[j].Trim();
+                        string key = argumentList[i].Substring(1).Trim().ToUpper();
+                        string value = argumentList[j].Trim();
 
                         _commandLineParts.Add(new CommandLinePart(key, value));
                     }
