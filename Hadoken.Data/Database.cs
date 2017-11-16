@@ -36,8 +36,11 @@ namespace Hadoken.Data
             stringBuilder.AppendLine("  WITH OWNER = postgres");
             stringBuilder.AppendLine("       ENCODING = 'UTF8'");
             stringBuilder.AppendLine("       TABLESPACE = pg_default");
-            stringBuilder.AppendLine("       LC_COLLATE = 'English_Australia.1252'");
-            stringBuilder.AppendLine("       LC_CTYPE = 'English_Australia.1252'");
+
+            //  Commenting these lines for the moment
+            //  stringBuilder.AppendLine("       LC_COLLATE = 'English_Australia.1252'");
+            //  stringBuilder.AppendLine("       LC_CTYPE = 'English_Australia.1252'");
+
             stringBuilder.AppendLine(" CONNECTION LIMIT = -1;");
 
             ExecuteNonQuery(_dbConnection, stringBuilder.ToString());
