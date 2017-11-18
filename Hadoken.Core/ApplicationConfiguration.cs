@@ -9,14 +9,25 @@ namespace Hadoken.Core
 {
 	public sealed class ApplicationConfiguration
 	{
-		private const string HadokenConnectionStringKey = "HadokenConnectionString";
+        private static string _hadokenConnectionString;
+
+        public const string HadokenConnectionStringKey = "HadokenConnectionString";
 
 		public static string HadokenConnectionString
         {
 			get
 			{
-				return GetConnectionStringValue(HadokenConnectionStringKey);
+                if (String.IsNullOrEmpty(_hadokenConnectionString) == true)
+                {
+                    _hadokenConnectionString = GetConnectionStringValue(HadokenConnectionStringKey);
+                }
+
+				return _hadokenConnectionString;
 			}
+            set
+            {
+                _hadokenConnectionString = value;
+            }
 		}
 
 		private static string GetAppSettingsValue(string key)

@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>@ViewData["Title"] - Hadoken</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/css/Version1.css" type="text/css" media="screen" />
+</head>
+
+<body>
+
+<div class="LayoutContainer">
+<div class="Header">
+<div class="HeaderImage"><a href="/" title="Home - Hadoken"><img src="/images/hadoken.jpg" alt="Home - Hadoken" title="Home - Hadoken" /></a></div>
+<div class="HeaderLinks">
+<a href="/" title="Home">Home</a> &raquo;
+<a href="/Home/Contact" title="Contact">Contact</a>
+</div>
+</div>
+
+<div class="HorizontalSolidLine"></div>
+<div class="HorizontalSpacer"></div>
+
+<div class="Layout">
+
+@RenderBody()
+
+</div>
+
+<div class="HorizontalSpacer"></div>
+<div class="HorizontalSolidLine"></div>
+
+<p align="center">Copyright &copy; @DateTime.Now.Year <a href="/" title="Hadoken">Hadoken</a></p>
+
+<div class="HorizontalSpacer"></div>
+
+</div>
+
+@*<script type="text/javascript">
+
+    var sGuid = '3C9AAA06-9031-4B3E-8AFE-586AE8F6E17F';
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-26910229-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function ()
+    {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>*@
+
+@RenderSection("Scripts", required: false)
+
+</body>
+</html>
