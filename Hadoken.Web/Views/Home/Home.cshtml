@@ -1,0 +1,101 @@
+﻿@using Hadoken.Web.Models.Home;
+
+@model IEnumerable<ElementModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="GreyBorder" style="width:882px;margin-left:auto;margin-right:auto;">
+
+    @for (int i = 0; i < 9; i++)
+    {
+        List<ElementModel> periodElementList = new List<ElementModel>();
+
+        <div class="Period">
+
+            @switch (i)
+            {
+                case 0:
+                    periodElementList.Add(Model.Where(m => (m.AtomicNumber == 1)).Single());
+
+                    for (int j = 0; j < 16; j++)
+                    {
+                        periodElementList.Add(null);
+                    }
+
+                    periodElementList.Add(Model.Where(m => (m.AtomicNumber == 2)).Single());
+                    break;
+
+                case 1:
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 3) && (m.AtomicNumber <= 4))));
+
+                    for (int j = 0; j < 10; j++)
+                    {
+                        periodElementList.Add(null);
+                    }
+
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 11) && (m.AtomicNumber <= 10))));
+                    break;
+
+                case 2:
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 11) && (m.AtomicNumber <= 12))));
+
+                    for (int j = 0; j < 10; j++)
+                    {
+                        periodElementList.Add(null);
+                    }
+
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 13) && (m.AtomicNumber <= 18))));
+                    break;
+
+                case 3:
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 19) && (m.AtomicNumber <= 36))));
+                    break;
+
+                case 4:
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 37) && (m.AtomicNumber <= 55))));
+                    break;
+
+                case 5:
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 55) && (m.AtomicNumber <= 56))));
+                    periodElementList.Add(null);
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 72) && (m.AtomicNumber <= 86))));
+                    break;
+
+                case 6:
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 87) && (m.AtomicNumber <= 88))));
+                    periodElementList.Add(null);
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 104) && (m.AtomicNumber <= 118))));
+                    break;
+
+                case 7:
+                    periodElementList.Add(null);
+                    periodElementList.Add(null);
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 57) && (m.AtomicNumber <= 71))));
+                    break;
+
+                case 8:
+                    periodElementList.Add(null);
+                    periodElementList.Add(null);
+                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 89) && (m.AtomicNumber <= 103))));
+                    break;
+
+            }
+
+            @for (int j = 0; j < periodElementList.Count; j++)
+            {
+                if (periodElementList[j] == null)
+                {
+                    <div class="GroupEmpty"></div>
+                }
+                else
+                {
+                    <div class="@periodElementList[j].ClassName"><span>@periodElementList[j].AtomicNumber</span><p>@periodElementList[j].Symbol</p></div>
+                }
+            }
+
+        </div>
+    }
+
+</div>
