@@ -15,6 +15,9 @@ namespace Hadoken.Data.Migrations
             ExecuteResource("Public.Group.sql");
             ExecuteResource("Public.Element.sql");
 
+            //  Functions
+            ExecuteResource("Public.spGetElement.sql");
+            
             //  Data
             ExecuteResource("Groups.sql");
             ExecuteResource("Elements.sql");

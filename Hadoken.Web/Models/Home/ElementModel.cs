@@ -196,6 +196,16 @@ namespace Hadoken.Web.Models.Home
                 className = "TransitionMetal";
             }
 
+            if ((element.AtomicNumber >= 57) && (element.AtomicNumber <= 71))
+            {
+                className = "LanthanideSeries";
+            }
+
+            if ((element.AtomicNumber >= 89) && (element.AtomicNumber <= 103))
+            {
+                className = "ActinideSeries";
+            }
+
             return new ElementModel
             (
                 element.AtomicNumber,

@@ -53,11 +53,13 @@ a:hover
 }
 
 .Group,
+.GroupActinideSeries,
 .GroupAlkaliMetal,
 .GroupAlkaliEarthMetal,
 .GroupDiatomicNonMetal,
 .GroupEmpty,
 .GroupHydrogen,
+.GroupLanthanideSeries,
 .GroupMetalloid,
 .GroupNobleGas,
 .GroupPolyatomicNonMetal,
@@ -75,10 +77,12 @@ a:hover
 }
 
 .Group a,
+.GroupActinideSeries a,
 .GroupAlkaliMetal a,
 .GroupAlkaliEarthMetal a,
 .GroupDiatomicNonMetal a,
 .GroupHydrogen a,
+.GroupLanthanideSeries a,
 .GroupMetalloid a,
 .GroupNobleGas a,
 .GroupPolyatomicNonMetal a,
@@ -89,10 +93,12 @@ a:hover
 }
 
 .Group a:hover,
+.GroupActinideSeries a:hover,
 .GroupAlkaliMetal a:hover,
 .GroupAlkaliEarthMetal a:hover,
 .GroupDiatomicNonMetal a:hover,
 .GroupHydrogen a:hover,
+.GroupLanthanideSeries a:hover,
 .GroupMetalloid a:hover,
 .GroupNobleGas a:hover,
 .GroupPolyatomicNonMetal a:hover,
@@ -103,10 +109,12 @@ a:hover
 }
 
 .Group:hover,
+.GroupActinideSeries:hover,
 .GroupAlkaliMetal:hover,
 .GroupAlkaliEarthMetal:hover,
 .GroupDiatomicNonMetal:hover,
 .GroupHydrogen:hover,
+.GroupLanthanideSeries:hover,
 .GroupMetalloid:hover,
 .GroupNobleGas:hover,
 .GroupPolyatomicNonMetal:hover,
@@ -117,10 +125,12 @@ a:hover
 }
 
 .Group span,
+.GroupActinideSeries span,
 .GroupAlkaliMetal span,
 .GroupAlkaliEarthMetal span,
 .GroupDiatomicNonMetal span,
 .GroupHydrogen span,
+.GroupLanthanideSeries span,
 .GroupMetalloid span,
 .GroupNobleGas span,
 .GroupPolyatomicNonMetal span,
@@ -140,10 +150,12 @@ a:hover
 }
 
 .Group p,
+.GroupActinideSeries p,
 .GroupAlkaliMetal p,
 .GroupAlkaliEarthMetal p,
 .GroupDiatomicNonMetal p,
 .GroupHydrogen p,
+.GroupLanthanideSeries p,
 .GroupMetalloid p,
 .GroupNobleGas p,
 .GroupPolyatomicNonMetal p,
@@ -154,6 +166,11 @@ a:hover
     font-size: 20pt;
     margin-top: 12px;
     text-align: center;
+}
+
+.GroupActinideSeries
+{
+    background-color: #B5B6B0;
 }
 
 .GroupAlkaliMetal
@@ -179,6 +196,11 @@ a:hover
 .GroupHydrogen
 {
     background-color: #87D300;
+}
+
+.GroupLanthanideSeries
+{
+    background-color: #E1DFD9;
 }
 
 .GroupMetalloid

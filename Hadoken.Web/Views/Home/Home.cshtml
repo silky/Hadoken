@@ -6,6 +6,23 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script type="text/javascript">
+
+var elements = 
+[
+    @foreach (ElementModel elementModel in Model)
+    {
+        @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, Name: \"{elementModel.Name}\" }},{Environment.NewLine}");
+    }
+];
+
+function Element(atomicNumber)
+{
+    alert(elements[(atomicNumber - 1)].Name);
+}
+
+</script>
+
 <div class="GreyBorder" style="width:882px;margin-left:auto;margin-right:auto;">
 
     @for (int i = 0; i < 9; i++)
@@ -91,7 +108,7 @@
                 }
                 else
                 {
-                    <div class="@periodElementList[j].ClassName"><span>@periodElementList[j].AtomicNumber</span><p>@periodElementList[j].Symbol</p></div>
+                    <div class="@periodElementList[j].ClassName"><a href="javascript:Element(@periodElementList[j].AtomicNumber);"><span>@periodElementList[j].AtomicNumber</span><p>@periodElementList[j].Symbol</p></a></div>
                 }
             }
 
