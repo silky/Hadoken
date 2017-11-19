@@ -3,6 +3,11 @@
     height: 100%;
 }
 
+.BlackBorder
+{
+    border: 1px solid #000000;
+}
+
 body
 {
     color: #112228;
@@ -50,6 +55,11 @@ a:hover
 .field-validation-error
 {
     color: #ff0000;
+}
+
+.GreyBorder
+{
+    border: 1px solid #C0C0C0;
 }
 
 .Group,
@@ -226,11 +236,6 @@ a:hover
 .GroupTransitionMetal
 {
     background-color: #FF9F00;
-}
-
-.GreyBorder
-{
-    border: 1px solid #C0C0C0;
 }
 
 h1

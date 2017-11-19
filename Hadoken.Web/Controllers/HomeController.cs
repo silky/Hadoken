@@ -17,16 +17,24 @@ namespace Hadoken.Web.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Error()
         {
             return View(new ErrorViewModel(Activity.Current?.Id ?? HttpContext.TraceIdentifier));
         }
 
+        [HttpGet]
         public IActionResult Home()
         {
             ElementRepository elementRepository = new ElementRepository();
 
-            return View(elementRepository.SelectElements().Select(m => (ElementModel.ToElementModel(m))));
+            return View(new HomeModel(elementRepository.SelectElements().Select(m => (ElementModel.ToElementModel(m))).ToList()));
+        }
+
+        [HttpPost]
+        public IActionResult Home(HomeModel homeModel)
+        {
+            return View(homeModel);
         }
     }
 }
