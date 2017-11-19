@@ -1,29 +1,112 @@
 ﻿@using Hadoken.Web.Models.Home;
 
-@model IEnumerable<ElementModel>
+@model HomeModel
 
 @{
     ViewData["Title"] = "Home Page";
+
+    List<ElementModel> elementModels = Model.ElementModels;
 }
 
 <script type="text/javascript">
 
-var elements = 
-[
-    @foreach (ElementModel elementModel in Model)
-    {
-        @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, Name: \"{elementModel.Name}\" }},{Environment.NewLine}");
-    }
-];
+    var elements = null;
 
-function Element(atomicNumber)
-{
-    alert(elements[(atomicNumber - 1)].Name);
-}
+    document.body.onload = function ()
+    {
+        elements =
+        [
+            @foreach (ElementModel elementModel in elementModels)
+            {
+                @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, IsSelected: false, Name: \"{elementModel.Name}\", Symbol: \"{elementModel.Symbol}\" }},{Environment.NewLine}");
+            }
+        ];
+
+        var chkIsAnd = document.getElementById('chkIsAnd');
+        var chkIsOr = document.getElementById('chkIsOr');
+        var cmdClear = document.getElementById('cmdClear');
+
+        chkIsAnd.onchange = function ()
+        {
+            chkIsOr.checked = !chkIsAnd.checked;
+        }
+
+        chkIsOr.onchange = function ()
+        {
+            chkIsAnd.checked = !chkIsOr.checked;
+        }
+
+        cmdClear.onclick = function ()
+        {
+            for (var i = 0; i < elements.length; i++)
+            {
+                elements[i].IsSelected = false;
+            }
+
+            FormatSearch();
+        }
+    };
+
+    function Element(atomicNumber)
+    {
+        var element = elements[(atomicNumber - 1)];
+
+        element.IsSelected = !element.IsSelected;
+
+        var div = document.getElementById('div' + atomicNumber);
+
+        if (element.IsSelected == true)
+        {
+            div.classList.add('BlackBorder')
+        }
+        else
+        {
+            div.classList.remove('BlackBorder');
+        }
+
+        FormatSearch();
+    }
+
+    function FormatSearch()
+    {
+        var txtSearch = document.getElementById('Search');
+        txtSearch.value = '';
+
+        for (var i = 0; i < elements.length; i++)
+        {
+            if (elements[i].IsSelected == true)
+            {
+                txtSearch.value += elements[i].Symbol + ' ';
+            }
+        }
+    }
 
 </script>
 
 <div class="GreyBorder" style="width:882px;margin-left:auto;margin-right:auto;">
+
+<div class="GreyBorder">
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="GreyBorder">
+<p><input id="Search" type="text" style="font-size: 20pt;width:800px;" /></p>
+</div>
+
+<div>
+<p><input id="chkIsAnd" type="checkbox" value="And" /> And</p>
+<p><input id="chkIsOr" type="checkbox" value="Or" /> Or</p>
+</div>
+
+<div>
+<p><input id="cmdClear" type="reset" value="Clear" /></p>
+<p><input id="cmdSubmit" type="submit" value="Search" /></p>
+</div>
+}
+
+</div>
 
     @for (int i = 0; i < 9; i++)
     {
@@ -34,81 +117,83 @@ function Element(atomicNumber)
             @switch (i)
             {
                 case 0:
-                    periodElementList.Add(Model.Where(m => (m.AtomicNumber == 1)).Single());
+                    periodElementList.Add(elementModels.Where(m => (m.AtomicNumber == 1)).Single());
 
                     for (int j = 0; j < 16; j++)
                     {
                         periodElementList.Add(null);
                     }
 
-                    periodElementList.Add(Model.Where(m => (m.AtomicNumber == 2)).Single());
+                    periodElementList.Add(elementModels.Where(m => (m.AtomicNumber == 2)).Single());
                     break;
 
                 case 1:
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 3) && (m.AtomicNumber <= 4))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 3) && (m.AtomicNumber <= 4))));
 
                     for (int j = 0; j < 10; j++)
                     {
                         periodElementList.Add(null);
                     }
 
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 11) && (m.AtomicNumber <= 10))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 5) && (m.AtomicNumber <= 10))));
                     break;
 
                 case 2:
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 11) && (m.AtomicNumber <= 12))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 11) && (m.AtomicNumber <= 12))));
 
                     for (int j = 0; j < 10; j++)
                     {
                         periodElementList.Add(null);
                     }
 
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 13) && (m.AtomicNumber <= 18))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 13) && (m.AtomicNumber <= 18))));
                     break;
 
                 case 3:
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 19) && (m.AtomicNumber <= 36))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 19) && (m.AtomicNumber <= 36))));
                     break;
 
                 case 4:
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 37) && (m.AtomicNumber <= 55))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 37) && (m.AtomicNumber <= 55))));
                     break;
 
                 case 5:
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 55) && (m.AtomicNumber <= 56))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 55) && (m.AtomicNumber <= 56))));
                     periodElementList.Add(null);
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 72) && (m.AtomicNumber <= 86))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 72) && (m.AtomicNumber <= 86))));
                     break;
 
                 case 6:
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 87) && (m.AtomicNumber <= 88))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 87) && (m.AtomicNumber <= 88))));
                     periodElementList.Add(null);
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 104) && (m.AtomicNumber <= 118))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 104) && (m.AtomicNumber <= 118))));
                     break;
 
                 case 7:
                     periodElementList.Add(null);
                     periodElementList.Add(null);
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 57) && (m.AtomicNumber <= 71))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 57) && (m.AtomicNumber <= 71))));
                     break;
 
                 case 8:
                     periodElementList.Add(null);
                     periodElementList.Add(null);
-                    periodElementList.AddRange(Model.Where(m => ((m.AtomicNumber >= 89) && (m.AtomicNumber <= 103))));
+                    periodElementList.AddRange(elementModels.Where(m => ((m.AtomicNumber >= 89) && (m.AtomicNumber <= 103))));
                     break;
 
             }
 
             @for (int j = 0; j < periodElementList.Count; j++)
             {
-                if (periodElementList[j] == null)
+                ElementModel periodElementModel = periodElementList[j];
+
+                if (periodElementModel == null)
                 {
                     <div class="GroupEmpty"></div>
                 }
                 else
                 {
-                    <div class="@periodElementList[j].ClassName"><a href="javascript:Element(@periodElementList[j].AtomicNumber);"><span>@periodElementList[j].AtomicNumber</span><p>@periodElementList[j].Symbol</p></a></div>
+                    <div id="div@(periodElementModel.AtomicNumber)" class="@periodElementModel.ClassName" title="@periodElementModel.Name"><a href="javascript:Element(@periodElementModel.AtomicNumber);"><span>@periodElementModel.AtomicNumber</span><p>@periodElementModel.Symbol</p></a></div>
                 }
             }
 
