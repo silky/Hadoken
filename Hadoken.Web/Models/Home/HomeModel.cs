@@ -18,7 +18,7 @@ namespace Hadoken.Web.Models.Home
             _elementModels = elementModels;
         }
 
-        private readonly List<ElementModel> _elementModels;
+        private List<ElementModel> _elementModels;
         private string _search;
 
         public List<ElementModel> ElementModels
@@ -26,6 +26,10 @@ namespace Hadoken.Web.Models.Home
             get
             {
                 return _elementModels;
+            }
+            set
+            {
+                _elementModels = value;
             }
         }
 

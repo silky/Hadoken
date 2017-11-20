@@ -10,6 +10,7 @@
 
 <script type="text/javascript">
 
+    var divSearch = null;
     var elements = null;
 
     document.body.onload = function ()
@@ -18,13 +19,24 @@
         [
             @foreach (ElementModel elementModel in elementModels)
             {
-                @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, IsSelected: false, Name: \"{elementModel.Name}\", Symbol: \"{elementModel.Symbol}\" }},{Environment.NewLine}");
+                @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, Class: \"{elementModel.ClassName}\", IsSelected: false, Name: \"{elementModel.Name}\", Symbol: \"{elementModel.Symbol}\" }},{Environment.NewLine}");
             }
         ];
 
+        divSearch = document.getElementById('divSearch');
+        var cmdClear = document.getElementById('cmdClear');
         var chkIsAnd = document.getElementById('chkIsAnd');
         var chkIsOr = document.getElementById('chkIsOr');
-        var cmdClear = document.getElementById('cmdClear');
+
+        cmdClear.onclick = function ()
+        {
+            for (var i = 0; i < elements.length; i++)
+            {
+                elements[i].IsSelected = false;
+            }
+
+            FormatSearch();
+        }
 
         chkIsAnd.onchange = function ()
         {
@@ -36,16 +48,49 @@
             chkIsAnd.checked = !chkIsOr.checked;
         }
 
-        cmdClear.onclick = function ()
+        var oForm = document.forms[0];
+
+        oForm.onsubmit = function ()
         {
+            var txtSearch = document.getElementById('Search');
+            txtSearch.value = '';
+
             for (var i = 0; i < elements.length; i++)
             {
-                elements[i].IsSelected = false;
+                if (elements[i].IsSelected == true)
+                {
+                    txtSearch.value += elements[i].Symbol + ' ';
+                }
             }
 
-            FormatSearch();
+            var isSubmit = false;
+
+            if (txtSearch.value != '')
+            {
+                isSubmit = true;
+            }
+
+            return isSubmit;
         }
     };
+
+    function AddElement(element)
+    {
+        var divElement = document.createElement('div');
+        divElement.className = element.Class;
+
+        var divElementSpan = document.createElement('span');
+        divElementSpan.innerHTML = element.AtomicNumber;
+
+        divElement.appendChild(divElementSpan);
+
+        var divElementParagraph = document.createElement('p');
+        divElementParagraph.innerHTML = element.Symbol;
+
+        divElement.appendChild(divElementParagraph);
+
+        divSearch.appendChild(divElement);
+    }
 
     function Element(atomicNumber)
     {
@@ -69,14 +114,16 @@
 
     function FormatSearch()
     {
-        var txtSearch = document.getElementById('Search');
-        txtSearch.value = '';
+        while (divSearch.hasChildNodes())
+        {
+            divSearch.removeChild(divSearch.lastChild);
+        }
 
         for (var i = 0; i < elements.length; i++)
         {
             if (elements[i].IsSelected == true)
             {
-                txtSearch.value += elements[i].Symbol + ' ';
+                AddElement(elements[i]);
             }
         }
     }
@@ -91,9 +138,11 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="GreyBorder">
-<p><input id="Search" type="text" style="font-size: 20pt;width:800px;" /></p>
+    @Html.HiddenFor(m => m.Search);
+
+<div id="divSearch" class="GreyBorder">
 </div>
+
 
 <div>
 <p><input id="chkIsAnd" type="checkbox" value="And" /> And</p>

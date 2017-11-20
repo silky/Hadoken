@@ -34,6 +34,10 @@ namespace Hadoken.Web.Controllers
         [HttpPost]
         public IActionResult Home(HomeModel homeModel)
         {
+            ElementRepository elementRepository = new ElementRepository();
+
+            homeModel.ElementModels = elementRepository.SelectElements().Select(m => (ElementModel.ToElementModel(m))).ToList();
+
             return View(homeModel);
         }
     }
