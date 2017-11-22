@@ -6,6 +6,7 @@ using System.Linq;
 
 using Microsoft.AspNetCore.Mvc;
 
+using Hadoken.Core.Logging;
 using Hadoken.Data;
 
 using Hadoken.Web.Models;
@@ -37,6 +38,9 @@ namespace Hadoken.Web.Controllers
             ElementRepository elementRepository = new ElementRepository();
 
             homeModel.ElementModels = elementRepository.SelectElements().Select(m => (ElementModel.ToElementModel(m))).ToList();
+
+            OutputStreams.WriteLine("[HttpPost] Home:");
+            homeModel.Symbols.ForEach(m => OutputStreams.WriteLine(m));
 
             return View(homeModel);
         }

@@ -20,6 +20,7 @@ namespace Hadoken.Web.Models.Home
 
         private List<ElementModel> _elementModels;
         private string _search;
+        private List<string> _symbols;
 
         public List<ElementModel> ElementModels
         {
@@ -30,6 +31,23 @@ namespace Hadoken.Web.Models.Home
             set
             {
                 _elementModels = value;
+            }
+        }
+
+        public List<string> Symbols
+        {
+            get
+            {
+                if (_symbols == null)
+                {
+                    _symbols = new List<string>();
+                }
+                
+                return _symbols;
+            }
+            set
+            {
+                _symbols = value;
             }
         }
 

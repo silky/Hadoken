@@ -12,6 +12,7 @@
 
     var divSearch = null;
     var elements = null;
+    var form = null;
 
     document.body.onload = function ()
     {
@@ -19,24 +20,15 @@
         [
             @foreach (ElementModel elementModel in elementModels)
             {
-                @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, Class: \"{elementModel.ClassName}\", IsSelected: false, Name: \"{elementModel.Name}\", Symbol: \"{elementModel.Symbol}\" }},{Environment.NewLine}");
+                @Html.Raw($"{{ AtomicNumber: {elementModel.AtomicNumber}, Class: \"{elementModel.ClassName}\", IsSelected: {((Model.Symbols.Any(m => (m == elementModel.Symbol)) == true) ? "true" : "false")}, Name: \"{elementModel.Name}\", Symbol: \"{elementModel.Symbol}\" }},{Environment.NewLine}");
             }
         ];
 
         divSearch = document.getElementById('divSearch');
-        var cmdClear = document.getElementById('cmdClear');
+        form = document.forms[0];
+
         var chkIsAnd = document.getElementById('chkIsAnd');
         var chkIsOr = document.getElementById('chkIsOr');
-
-        cmdClear.onclick = function ()
-        {
-            for (var i = 0; i < elements.length; i++)
-            {
-                elements[i].IsSelected = false;
-            }
-
-            FormatSearch();
-        }
 
         chkIsAnd.onchange = function ()
         {
@@ -48,30 +40,12 @@
             chkIsAnd.checked = !chkIsOr.checked;
         }
 
-        var oForm = document.forms[0];
-
-        oForm.onsubmit = function ()
+        form.onsubmit = function ()
         {
-            var txtSearch = document.getElementById('Search');
-            txtSearch.value = '';
-
-            for (var i = 0; i < elements.length; i++)
-            {
-                if (elements[i].IsSelected == true)
-                {
-                    txtSearch.value += elements[i].Symbol + ' ';
-                }
-            }
-
-            var isSubmit = false;
-
-            if (txtSearch.value != '')
-            {
-                isSubmit = true;
-            }
-
-            return isSubmit;
+            return (GetSelectedElements().length > 0);
         }
+
+        FormatSearch();
     };
 
     function AddElement(element)
@@ -90,9 +64,68 @@
         divElement.appendChild(divElementParagraph);
 
         divSearch.appendChild(divElement);
+
+        var index = GetHiddenFormElements().length;
+
+        var formElement = document.createElement('input');
+        formElement.type = 'hidden';
+        formElement.id = 'Symbols_' + index + '_';
+        formElement.name = 'Symbols[' + index + ']';
+        formElement.value = element.Symbol;
+        form.appendChild(formElement);
     }
 
-    function Element(atomicNumber)
+    function DeselectElements()
+    {
+        GetSelectedElements().forEach((m => { m.IsSelected = false; }));
+    }
+
+    function FormatSearch()
+    {
+        while (divSearch.hasChildNodes())
+        {
+            divSearch.removeChild(divSearch.lastChild);
+        }
+
+        var hiddenFormElements = GetHiddenFormElements();
+    
+        for (var i = 0; i < hiddenFormElements.length; i++)
+        {
+            var hiddenFormElement = hiddenFormElements[i];
+
+            if ((hiddenFormElement.type == 'hidden') && (hiddenFormElement.id != undefined) && (hiddenFormElement.id.indexOf('Symbols') > -1))
+            {
+                form.removeChild(hiddenFormElement);
+            }
+        }
+        
+        GetSelectedElements().forEach(m => { AddElement(m); });
+    }
+
+    function GetHiddenFormElements()
+    {
+        var hiddenFormElements = new Array();
+        var formElements = document.getElementsByTagName('input');
+        
+        for (var i = 0; i < formElements.length; i++)
+        {
+            var formElement = formElements[i];
+
+            if ((formElement.type == 'hidden') && (formElement.id != undefined) && (formElement.id.indexOf('Symbols') > -1))
+            {
+                hiddenFormElements.push(formElement);
+            }
+        }
+
+        return hiddenFormElements;
+    }
+
+    function GetSelectedElements()
+    {
+        return elements.filter(function(element) { return (element.IsSelected == true); });
+    }
+
+    function SelectElement(atomicNumber)
     {
         var element = elements[(atomicNumber - 1)];
 
@@ -112,22 +145,6 @@
         FormatSearch();
     }
 
-    function FormatSearch()
-    {
-        while (divSearch.hasChildNodes())
-        {
-            divSearch.removeChild(divSearch.lastChild);
-        }
-
-        for (var i = 0; i < elements.length; i++)
-        {
-            if (elements[i].IsSelected == true)
-            {
-                AddElement(elements[i]);
-            }
-        }
-    }
-
 </script>
 
 <div class="GreyBorder" style="width:882px;margin-left:auto;margin-right:auto;">
@@ -138,7 +155,10 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.HiddenFor(m => m.Search);
+    @for( int i = 0; i < Model.Symbols.Count; i++)
+    {
+        @Html.HiddenFor(m => m.Symbols[i]);
+    }
 
 <div id="divSearch" class="GreyBorder">
 </div>
@@ -150,7 +170,7 @@
 </div>
 
 <div>
-<p><input id="cmdClear" type="reset" value="Clear" /></p>
+<p>@Html.ActionLink("Clear", "Home", "Home")</p>
 <p><input id="cmdSubmit" type="submit" value="Search" /></p>
 </div>
 }
@@ -242,7 +262,7 @@
                 }
                 else
                 {
-                    <div id="div@(periodElementModel.AtomicNumber)" class="@periodElementModel.ClassName" title="@periodElementModel.Name"><a href="javascript:Element(@periodElementModel.AtomicNumber);"><span>@periodElementModel.AtomicNumber</span><p>@periodElementModel.Symbol</p></a></div>
+                    <div id="div@(periodElementModel.AtomicNumber)" class="@periodElementModel.ClassName" title="@periodElementModel.Name"><a href="javascript:SelectElement(@periodElementModel.AtomicNumber);"><span>@periodElementModel.AtomicNumber</span><p>@periodElementModel.Symbol</p></a></div>
                 }
             }
 
