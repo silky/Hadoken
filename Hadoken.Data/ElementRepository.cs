@@ -1,10 +1,11 @@
 ﻿#region Using References
 
-using Hadoken.Core;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+
+using Hadoken.Core.Elements;
 
 #endregion
 

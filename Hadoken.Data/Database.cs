@@ -1,10 +1,11 @@
 ﻿#region Using References
 
-using Hadoken.Core.Logging;
 using System;
 using System.Data;
 using System.Data.Common;
 using System.Text;
+
+using Hadoken.Core.IO;
 
 #endregion
 

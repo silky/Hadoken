@@ -19,6 +19,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Hadoken.Core\Hadoken.Core.csproj" />
     <ProjectReference Include="..\Hadoken.Data\Hadoken.Data.csproj" />
+    <ProjectReference Include="..\Hadoken.IO.Web.AFlow\Hadoken.IO.Web.AFlow.csproj" />
+    <ProjectReference Include="..\Hadoken.IO.Web.MaterialsProject\Hadoken.IO.Web.MaterialsProject.csproj" />
+    <ProjectReference Include="..\Hadoken.IO.Web\Hadoken.IO.Web.csproj" />
   </ItemGroup>
 
   <ItemGroup>

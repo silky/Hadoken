@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 
+using Hadoken.IO.Web;
+
 #endregion
 
 namespace Hadoken.Web.Models.Home
@@ -20,6 +22,7 @@ namespace Hadoken.Web.Models.Home
 
         private List<ElementModel> _elementModels;
         private string _search;
+        private List<SearchResult> _searchResult;
         private List<string> _symbols;
 
         public List<ElementModel> ElementModels
@@ -31,6 +34,23 @@ namespace Hadoken.Web.Models.Home
             set
             {
                 _elementModels = value;
+            }
+        }
+
+        public List<SearchResult> SearchResults
+        {
+            get
+            {
+                if (_searchResult == null)
+                {
+                    _searchResult = new List<SearchResult>();
+                }
+
+                return _searchResult;
+            }
+            set
+            {
+                _searchResult = value;
             }
         }
 

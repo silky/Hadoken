@@ -1,4 +1,5 @@
-﻿@using Hadoken.Web.Models.Home;
+﻿@using Hadoken.IO.Web;
+@using Hadoken.Web.Models.Home;
 
 @model HomeModel
 
@@ -40,12 +41,18 @@
             chkIsAnd.checked = !chkIsOr.checked;
         }
 
+        form.onreset = function ()
+        {
+            DeselectElements();
+            SelectElements();
+        }
+
         form.onsubmit = function ()
         {
             return (GetSelectedElements().length > 0);
         }
 
-        FormatSearch();
+        SelectElements();
     };
 
     function AddElement(element)
@@ -78,28 +85,6 @@
     function DeselectElements()
     {
         GetSelectedElements().forEach((m => { m.IsSelected = false; }));
-    }
-
-    function FormatSearch()
-    {
-        while (divSearch.hasChildNodes())
-        {
-            divSearch.removeChild(divSearch.lastChild);
-        }
-
-        var hiddenFormElements = GetHiddenFormElements();
-    
-        for (var i = 0; i < hiddenFormElements.length; i++)
-        {
-            var hiddenFormElement = hiddenFormElements[i];
-
-            if ((hiddenFormElement.type == 'hidden') && (hiddenFormElement.id != undefined) && (hiddenFormElement.id.indexOf('Symbols') > -1))
-            {
-                form.removeChild(hiddenFormElement);
-            }
-        }
-        
-        GetSelectedElements().forEach(m => { AddElement(m); });
     }
 
     function GetHiddenFormElements()
@@ -142,14 +127,44 @@
             div.classList.remove('BlackBorder');
         }
 
-        FormatSearch();
+        SelectElements();
+    }
+
+    function SelectElements()
+    {
+        while (divSearch.hasChildNodes())
+        {
+            divSearch.removeChild(divSearch.lastChild);
+        }
+
+        var hiddenFormElements = GetHiddenFormElements();
+
+        for (var i = 0; i < hiddenFormElements.length; i++)
+        {
+            var hiddenFormElement = hiddenFormElements[i];
+
+            if ((hiddenFormElement.type == 'hidden') && (hiddenFormElement.id != undefined) && (hiddenFormElement.id.indexOf('Symbols') > -1))
+            {
+                form.removeChild(hiddenFormElement);
+            }
+        }
+
+        GetSelectedElements().forEach(m => { AddElement(m); });
     }
 
 </script>
 
-<div class="GreyBorder" style="width:882px;margin-left:auto;margin-right:auto;">
+<h1>Hadoken</h1>
 
-<div class="GreyBorder">
+<p>&nbsp;</p>
+
+<h2>Search</h2>
+
+<p>&nbsp;</p>
+
+<div style="width:882px;margin-left:auto;margin-right:auto;">
+
+<div>
 
 @using (Html.BeginForm())
 {
@@ -160,22 +175,25 @@
         @Html.HiddenFor(m => m.Symbols[i]);
     }
 
-<div id="divSearch" class="GreyBorder">
+<div id="divSearch" style="min-height:45px;">
 </div>
 
+<div style="clear:both;" />
 
 <div>
-<p><input id="chkIsAnd" type="checkbox" value="And" /> And</p>
-<p><input id="chkIsOr" type="checkbox" value="Or" /> Or</p>
+<p><input id="chkIsAnd" type="checkbox" value="And" /> <label for="chkIsAnd">And</label></p>
+<p><input id="chkIsOr" type="checkbox" value="Or" /> <label for="chkIsOr">Or</label></p>
 </div>
 
 <div>
-<p>@Html.ActionLink("Clear", "Home", "Home")</p>
-<p><input id="cmdSubmit" type="submit" value="Search" /></p>
+<input id="cmdClear" type="reset" value="Clear" />
+<input id="cmdSubmit" type="submit" value="Search" />
 </div>
 }
 
 </div>
+
+<br />
 
     @for (int i = 0; i < 9; i++)
     {
@@ -270,3 +288,36 @@
     }
 
 </div>
+
+<p>&nbsp;</p>
+
+<p>Search Results:</p>
+
+<table cellpadding="3" cellspacing="0" border="0" width="100%" class="SearchResults">
+
+<tr>
+<td width="40"><b>ID</b></td>
+<td><b>Compound</b></td>
+<td><b>Species</b></td>
+<td><b>Band Gap</b></td>
+<td><b>Gap Fit</b></td>
+<td><b>Gap Type</b></td>
+</tr>
+
+@{
+    foreach (SearchResult searchResult in Model.SearchResults)
+    {
+<tr>
+<td>&nbsp;</td>
+<td><a href="javascript:;">@searchResult.Compound</a></td>
+<td>@searchResult.Species</td>
+<td>@searchResult.BandGap</td>
+<td>@searchResult.EGapFit</td>
+<td>@searchResult.EGapType</td>
+</tr>
+    }
+}
+
+</table>
+
+<p>&nbsp;</p>

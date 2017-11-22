@@ -2,7 +2,7 @@
 
 using System;
 
-using Hadoken.Core;
+using Hadoken.Core.Elements;
 
 #endregion
 
