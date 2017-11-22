@@ -18,7 +18,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hadoken.Data.Deployer", "Ha
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hadoken.Data.Migrations", "Hadoken.Data.Migrations\Hadoken.Data.Migrations.csproj", "{1479658B-4163-4600-8E4B-89AEEEB4E642}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hadoken.Web", "Hadoken.Web\Hadoken.Web.csproj", "{C492EAE2-192D-45F0-8F81-350143BFCAA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hadoken.Web", "Hadoken.Web\Hadoken.Web.csproj", "{C492EAE2-192D-45F0-8F81-350143BFCAA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hadoken.IO.Web", "Hadoken.IO.Web\Hadoken.IO.Web.csproj", "{A89B5503-EEBD-4CE1-A679-439B798BE012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hadoken.IO.Web.AFlow", "Hadoken.IO.Web.AFlow\Hadoken.IO.Web.AFlow.csproj", "{D8E9157C-2CF5-41BA-B993-8F5A64F7094E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hadoken.IO.Web.MaterialsProject", "Hadoken.IO.Web.MaterialsProject\Hadoken.IO.Web.MaterialsProject.csproj", "{624BAB07-C95A-4BD7-8F22-296D1CBEFEDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +52,18 @@ Global
 		{C492EAE2-192D-45F0-8F81-350143BFCAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C492EAE2-192D-45F0-8F81-350143BFCAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C492EAE2-192D-45F0-8F81-350143BFCAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89B5503-EEBD-4CE1-A679-439B798BE012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89B5503-EEBD-4CE1-A679-439B798BE012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89B5503-EEBD-4CE1-A679-439B798BE012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89B5503-EEBD-4CE1-A679-439B798BE012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8E9157C-2CF5-41BA-B993-8F5A64F7094E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8E9157C-2CF5-41BA-B993-8F5A64F7094E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8E9157C-2CF5-41BA-B993-8F5A64F7094E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8E9157C-2CF5-41BA-B993-8F5A64F7094E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{624BAB07-C95A-4BD7-8F22-296D1CBEFEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{624BAB07-C95A-4BD7-8F22-296D1CBEFEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{624BAB07-C95A-4BD7-8F22-296D1CBEFEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{624BAB07-C95A-4BD7-8F22-296D1CBEFEDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

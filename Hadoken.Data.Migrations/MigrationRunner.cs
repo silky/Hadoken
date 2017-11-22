@@ -8,7 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 using System.IO;
-using Hadoken.Core.Logging;
+
+using Hadoken.Core.IO;
 
 #endregion
 

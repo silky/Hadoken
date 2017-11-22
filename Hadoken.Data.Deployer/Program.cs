@@ -7,7 +7,7 @@ using System.Text;
 using Npgsql;
 
 using Hadoken.Core;
-using Hadoken.Core.Logging;
+using Hadoken.Core.IO;
 using Hadoken.Data.Migrations;
 
 #endregion

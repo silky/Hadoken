@@ -479,6 +479,17 @@ pre
     }
 }
 
+.SearchResultsTable tr
+{
+    background-color: #FFFFFF;
+}
+
+.SearchResultsTable tr:hover
+{
+    background-color: rgb(228, 228, 225);
+}
+
+
 .Summary
 {
     color: #808080;
