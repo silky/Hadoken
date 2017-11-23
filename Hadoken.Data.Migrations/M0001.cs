@@ -7,20 +7,21 @@ using System;
 namespace Hadoken.Data.Migrations
 {
     [Migration(0001)]
+    [DataPlatform(DataPlatformType.Sql)]
     public class M0001 : Migration
     {
-        public override void Apply()
+        public override void Apply(DataPlatformType dataPlatformType)
         {
             //  Tables
-            ExecuteResource("Public.Group.sql");
-            ExecuteResource("Public.Element.sql");
+            ExecuteResource(dataPlatformType, "dbo.Group.sql");
+            ExecuteResource(dataPlatformType, "dbo.Element.sql");
 
             //  Functions
-            ExecuteResource("Public.spGetElement.sql");
+            ExecuteResource(dataPlatformType, "dbo.spGetElement.sql");
             
             //  Data
-            ExecuteResource("Groups.sql");
-            ExecuteResource("Elements.sql");
+            ExecuteResource(dataPlatformType, "Groups.sql");
+            ExecuteResource(dataPlatformType, "Elements.sql");
         }
     }
 }

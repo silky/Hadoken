@@ -13,7 +13,7 @@ namespace Hadoken.Data
 {
     public class ElementRepository : Repository
     {
-        private const string spGetElement = "public.spgetelement";
+        private const string spGetElement = "dbo.spGetElement"; //  "public.spgetelement";
 
         public List<Element> SelectElements()
         {

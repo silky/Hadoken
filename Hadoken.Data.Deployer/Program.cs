@@ -2,9 +2,7 @@
 
 using System;
 using System.Data.Common;
-using System.Text;
-
-using Npgsql;
+using System.Data.SqlClient;
 
 using Hadoken.Core;
 using Hadoken.Core.IO;
@@ -31,16 +29,16 @@ namespace Hadoken.Data.Deployer
             {
                 CommandLineParser commandLineParser = new CommandLineParser(((arguments.Length == 0) ? ApplicationNamespace : arguments[0]), arguments);
 
-                NpgsqlConnectionStringBuilder sqlConnectionStringBuilder = new NpgsqlConnectionStringBuilder(ApplicationConfiguration.HadokenConnectionString);
+                SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder(ApplicationConfiguration.HadokenConnectionString);
 
-                string targetDatabase = sqlConnectionStringBuilder.Database.ToLower();
+                string targetDatabase = sqlConnectionStringBuilder.InitialCatalog;
 
                 //	Switch over to master db to do admin type stuff
-                sqlConnectionStringBuilder.Database = "postgres";
+                sqlConnectionStringBuilder.InitialCatalog = "master";
 
                 using (DbConnection dbConnection = ConnectionFactory.NewDbConnection(sqlConnectionStringBuilder.ConnectionString))
                 {
-                    using (Database database = new Database(targetDatabase, dbConnection))
+                    using (Database database = new SqlDatabase(targetDatabase, dbConnection))
                     {
                         bool isExists = database.IsExists();
 
@@ -59,7 +57,7 @@ namespace Hadoken.Data.Deployer
                 }
 
                 //	Switch back to target db to run migrations
-                sqlConnectionStringBuilder.Database = targetDatabase;
+                sqlConnectionStringBuilder.InitialCatalog = targetDatabase;
 
                 using (DbConnection dbConnection = ConnectionFactory.NewDbConnection(sqlConnectionStringBuilder.ConnectionString))
                 {
@@ -91,7 +89,7 @@ namespace Hadoken.Data.Deployer
         {
             if ((dbConnection != null) && (String.IsNullOrEmpty(dbConnection.ConnectionString) == false))
             {
-                using (MigrationRunner migrationRunner = new MigrationRunner(dbConnection))
+                using (MigrationRunner migrationRunner = new SqlMigrationRunner(dbConnection))
                 {
                     migrationRunner.ExecuteMigrations();
                 }

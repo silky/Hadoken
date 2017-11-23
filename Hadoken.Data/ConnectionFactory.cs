@@ -2,8 +2,7 @@
 
 using System;
 using System.Data.Common;
-
-using Npgsql;
+using System.Data.SqlClient;
 
 using Hadoken.Core;
 
@@ -15,7 +14,7 @@ namespace Hadoken.Data
 	{
 		static ConnectionFactory()
 		{
-			_connectionString = new NpgsqlConnectionStringBuilder(ApplicationConfiguration.HadokenConnectionString).ConnectionString;
+			_connectionString = new SqlConnectionStringBuilder(ApplicationConfiguration.HadokenConnectionString).ConnectionString;
 		}
 
 		private static string _connectionString;
@@ -27,7 +26,7 @@ namespace Hadoken.Data
 
         public static DbConnection NewDbConnection(string connectionString)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
             connection.Open();
 

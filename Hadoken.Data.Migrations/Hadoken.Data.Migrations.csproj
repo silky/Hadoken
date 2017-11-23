@@ -8,14 +8,21 @@
     <None Remove="Elements.sql" />
     <None Remove="Public.Element.sql" />
     <None Remove="Public.spGetElement.sql" />
+    <None Remove="Sql\Elements.sql" />
+    <None Remove="Sql\Groups.sql" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Elements.sql" />
-    <EmbeddedResource Include="Groups.sql" />
-    <EmbeddedResource Include="Public.Element.sql" />
-    <EmbeddedResource Include="Public.Group.sql" />
-    <EmbeddedResource Include="Public.spGetElement.sql" />
+    <EmbeddedResource Include="Postgres\Elements.sql" />
+    <EmbeddedResource Include="Postgres\Groups.sql" />
+    <EmbeddedResource Include="Postgres\Public.Element.sql" />
+    <EmbeddedResource Include="Postgres\Public.Group.sql" />
+    <EmbeddedResource Include="Postgres\Public.spGetElement.sql" />
+    <EmbeddedResource Include="Sql\Elements.sql" />
+    <EmbeddedResource Include="Sql\Groups.sql" />
+    <EmbeddedResource Include="Sql\dbo.Element.sql" />
+    <EmbeddedResource Include="Sql\dbo.Group.sql" />
+    <EmbeddedResource Include="Sql\dbo.spGetElement.sql" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,29 @@
+﻿IF NOT EXISTS (SELECT * FROM sys.tables WHERE Name = 'Element')
+BEGIN
+
+CREATE TABLE dbo.[Element]
+(
+	ID INT IDENTITY (1, 1) NOT NULL,
+	GroupID INTEGER NULL,
+	AtomicNumber INTEGER NOT NULL,
+	Symbol VARCHAR(2),
+	Name VARCHAR(20),
+	Period INTEGER,
+	AtomicWeight DOUBLE PRECISION,
+	Density DOUBLE PRECISION,
+	DateCreatedUtc DATETIME NOT NULL,
+	DateUpdatedUtc DATETIME NOT NULL,
+	CONSTRAINT [PK_Element] PRIMARY KEY CLUSTERED 
+	(
+		[ID] ASC
+	) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+ALTER TABLE dbo.[Element] ADD  CONSTRAINT [DF_Element_DateCreatedUtc]  DEFAULT (getdate()) FOR [DateCreatedUtc]
+ALTER TABLE dbo.[Element] ADD  CONSTRAINT [DF_Element_DateUpdatedUtc]  DEFAULT (getdate()) FOR [DateUpdatedUtc]
+
+
+ALTER TABLE [dbo].[Element]  WITH CHECK ADD  CONSTRAINT [FK_Element_Group] FOREIGN KEY([GroupID]) REFERENCES [dbo].[Group] ([ID])
+ALTER TABLE [dbo].[Element] CHECK CONSTRAINT [FK_Element_Group]
+
+END

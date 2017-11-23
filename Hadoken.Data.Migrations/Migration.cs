@@ -8,19 +8,19 @@ namespace Hadoken.Data.Migrations
 {
     public class Migration
     {
-        public virtual void Apply()
+        public virtual void Apply(DataPlatformType dataPlatformType)
         {
         }
 
-        public void ExecuteResource(string name)
+        public void ExecuteResource(DataPlatformType dataPlatformType, string name)
         {
             if (String.IsNullOrEmpty(name) == false)
             {
-                MigrationRunner.ExecuteResource(name);
+                MigrationRunner.ExecuteResource($"{dataPlatformType.ToString()}.{name}");
             }
         }
 
-        public virtual void Rollback()
+        public virtual void Rollback(DataPlatformType dataPlatformType)
         {
         }
     }
