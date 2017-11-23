@@ -40,8 +40,6 @@ namespace Hadoken.Core.Elements
         private readonly int _period;
         private readonly string _symbol;
 
-        private static List<string> _notHandled = new List<string>();
-
         public int AtomicNumber
         {
             get
@@ -122,14 +120,6 @@ namespace Hadoken.Core.Elements
             }
         }
 
-        public static List<string> NotHandled
-        {
-            get
-            {
-                return _notHandled;
-            }
-        }
-
         public override bool Equals(object Value)
         {
             bool equals = false;
@@ -172,6 +162,11 @@ namespace Hadoken.Core.Elements
                     element = new AluminiumElement();
                     break;
 
+                case AmericiumElement.Am:
+                case AmericiumElement.Americium:
+                    element = new AmericiumElement();
+                    break;
+
                 case ArgonElement.Ar:
                 case ArgonElement.Argon:
                     element = new ArgonElement();
@@ -187,9 +182,19 @@ namespace Hadoken.Core.Elements
                     element = new ArsenicElement();
                     break;
 
+                case AstatineElement.At:
+                case AstatineElement.Astatine:
+                    element = new AstatineElement();
+                    break;
+
                 case BariumElement.Ba:
                 case BariumElement.Barium:
                     element = new BariumElement();
+                    break;
+
+                case BerkeliumElement.Bk:
+                case BerkeliumElement.Berkelium:
+                    element = new BerkeliumElement();
                     break;
 
                 case BerylliumElement.Be:
@@ -200,6 +205,11 @@ namespace Hadoken.Core.Elements
                 case BismuthElement.Bi:
                 case BismuthElement.Bismuth:
                     element = new BismuthElement();
+                    break;
+
+                case BohriumElement.Bh:
+                case BohriumElement.Bohrium:
+                    element = new BohriumElement();
                     break;
 
                 case BoronElement.B:
@@ -217,14 +227,19 @@ namespace Hadoken.Core.Elements
                     element = new CadmiumElement();
                     break;
 
+                case CaesiumElement.Cs:
+                case CaesiumElement.Caesium:
+                    element = new CaesiumElement();
+                    break;
+
                 case CalciumElement.Ca:
                 case CalciumElement.Calcium:
                     element = new CalciumElement();
                     break;
 
-                case CaesiumElement.Cs:
-                case CaesiumElement.Caesium:
-                    element = new CaesiumElement();
+                case CaliforniumElement.Cf:
+                case CaliforniumElement.Californium:
+                    element = new CaliforniumElement();
                     break;
 
                 case CarbonElement.C:
@@ -252,14 +267,39 @@ namespace Hadoken.Core.Elements
                     element = new CobaltElement();
                     break;
 
+                case CoperniciumElement.Cn:
+                case CoperniciumElement.Copernicium:
+                    element = new CoperniciumElement();
+                    break;
+
                 case CopperElement.Cu:
                 case CopperElement.Copper:
                     element = new CopperElement();
                     break;
 
+                case CuriumElement.Cm:
+                case CuriumElement.Curium:
+                    element = new CuriumElement();
+                    break;
+
+                case DarmstadtiumElement.Ds:
+                case DarmstadtiumElement.Darmstadtium:
+                    element = new DarmstadtiumElement();
+                    break;
+
+                case DubniumElement.Db:
+                case DubniumElement.Dubnium:
+                    element = new DubniumElement();
+                    break;
+
                 case DysprosiumElement.Dy:
                 case DysprosiumElement.Dysprosium:
                     element = new DysprosiumElement();
+                    break;
+
+                case EinsteiniumElement.Es:
+                case EinsteiniumElement.Einsteinium:
+                    element = new EinsteiniumElement();
                     break;
 
                 case ErbiumElement.Er:
@@ -272,9 +312,24 @@ namespace Hadoken.Core.Elements
                     element = new EuropiumElement();
                     break;
 
+                case FermiumElement.Fm:
+                case FermiumElement.Fermium:
+                    element = new FermiumElement();
+                    break;
+
+                case FleroviumElement.Fl:
+                case FleroviumElement.Flerovium:
+                    element = new FleroviumElement();
+                    break;
+
                 case FluorineElement.F:
                 case FluorineElement.Fluorine:
                     element = new FluorineElement();
+                    break;
+
+                case FranciumElement.Fr:
+                case FranciumElement.Francium:
+                    element = new FranciumElement();
                     break;
 
                 case GadoliniumElement.Gd:
@@ -302,14 +357,14 @@ namespace Hadoken.Core.Elements
                     element = new HafniumElement();
                     break;
 
+                case HassiumElement.Hs:
+                case HassiumElement.Hassium:
+                    element = new HassiumElement();
+                    break;
+
                 case HeliumElement.He:
                 case HeliumElement.Helium:
                     element = new HeliumElement();
-                    break;
-
-                case HydrogenElement.H:
-                case HydrogenElement.Hydrogen:
-                    element = new HydrogenElement();
                     break;
 
                 case HolmiumElement.Ho:
@@ -317,14 +372,19 @@ namespace Hadoken.Core.Elements
                     element = new HolmiumElement();
                     break;
 
-                case IodineElement.I:
-                case IodineElement.Iodine:
-                    element = new IodineElement();
+                case HydrogenElement.H:
+                case HydrogenElement.Hydrogen:
+                    element = new HydrogenElement();
                     break;
 
                 case IndiumElement.In:
                 case IndiumElement.Indium:
                     element = new IndiumElement();
+                    break;
+
+                case IodineElement.I:
+                case IodineElement.Iodine:
+                    element = new IodineElement();
                     break;
 
                 case IridiumElement.Ir:
@@ -347,9 +407,24 @@ namespace Hadoken.Core.Elements
                     element = new LanthanumElement();
                     break;
 
+                case LawrenciumElement.Lr:
+                case LawrenciumElement.Lawrencium:
+                    element = new LawrenciumElement();
+                    break;
+
+                case LeadElement.Pb:
+                case LeadElement.Lead:
+                    element = new LeadElement();
+                    break;
+
                 case LithiumElement.Li:
                 case LithiumElement.Lithium:
                     element = new LithiumElement();
+                    break;
+
+                case LivermoriumElement.Lv:
+                case LivermoriumElement.Livermorium:
+                    element = new LivermoriumElement();
                     break;
 
                 case LutetiumElement.Lu:
@@ -367,6 +442,16 @@ namespace Hadoken.Core.Elements
                     element = new ManganeseElement();
                     break;
 
+                case MeitneriumElement.Mt:
+                case MeitneriumElement.Meitnerium:
+                    element = new MeitneriumElement();
+                    break;
+
+                case MendeleviumElement.Md:
+                case MendeleviumElement.Mendelevium:
+                    element = new MendeleviumElement();
+                    break;
+
                 case MercuryElement.Hg:
                 case MercuryElement.Mercury:
                     element = new MercuryElement();
@@ -375,6 +460,11 @@ namespace Hadoken.Core.Elements
                 case MolybdenumElement.Mo:
                 case MolybdenumElement.Molybdenum:
                     element = new MolybdenumElement();
+                    break;
+
+                case MoscoviumElement.Mc:
+                case MoscoviumElement.Moscovium:
+                    element = new MoscoviumElement();
                     break;
 
                 case NeodymiumElement.Nd:
@@ -387,9 +477,19 @@ namespace Hadoken.Core.Elements
                     element = new NeonElement();
                     break;
 
+                case NeptuniumElement.Np:
+                case NeptuniumElement.Neptunium:
+                    element = new NeptuniumElement();
+                    break;
+
                 case NickelElement.Ni:
                 case NickelElement.Nickel:
                     element = new NickelElement();
+                    break;
+
+                case NihoniumElement.Nh:
+                case NihoniumElement.Nihonium:
+                    element = new NihoniumElement();
                     break;
 
                 case NiobiumElement.Nb:
@@ -402,6 +502,16 @@ namespace Hadoken.Core.Elements
                     element = new NitrogenElement();
                     break;
 
+                case NobeliumElement.No:
+                case NobeliumElement.Nobelium:
+                    element = new NobeliumElement();
+                    break;
+
+                case OganessonElement.Og:
+                case OganessonElement.Oganesson:
+                    element = new OganessonElement();
+                    break;
+
                 case OsmiumElement.Os:
                 case OsmiumElement.Osmium:
                     element = new OsmiumElement();
@@ -410,16 +520,6 @@ namespace Hadoken.Core.Elements
                 case OxygenElement.O:
                 case OxygenElement.Oxygen:
                     element = new OxygenElement();
-                    break;
-
-                case PotassiumElement.K:
-                case PotassiumElement.Potassium:
-                    element = new PotassiumElement();
-                    break;
-
-                case LeadElement.Pb:
-                case LeadElement.Lead:
-                    element = new LeadElement();
                     break;
 
                 case PalladiumElement.Pd:
@@ -442,6 +542,16 @@ namespace Hadoken.Core.Elements
                     element = new PlutoniumElement();
                     break;
 
+                case PoloniumElement.Po:
+                case PoloniumElement.Polonium:
+                    element = new PoloniumElement();
+                    break;
+
+                case PotassiumElement.K:
+                case PotassiumElement.Potassium:
+                    element = new PotassiumElement();
+                    break;
+
                 case PraseodymiumElement.Pr:
                 case PraseodymiumElement.Praseodymium:
                     element = new PraseodymiumElement();
@@ -457,6 +567,16 @@ namespace Hadoken.Core.Elements
                     element = new ProtactiniumElement();
                     break;
 
+                case RadiumElement.Ra:
+                case RadiumElement.Radium:
+                    element = new RadiumElement();
+                    break;
+
+                case RadonElement.Rn:
+                case RadonElement.Radon:
+                    element = new RadonElement();
+                    break;
+
                 case RheniumElement.Re:
                 case RheniumElement.Rhenium:
                     element = new RheniumElement();
@@ -465,6 +585,11 @@ namespace Hadoken.Core.Elements
                 case RhodiumElement.Rh:
                 case RhodiumElement.Rhodium:
                     element = new RhodiumElement();
+                    break;
+
+                case RoentgeniumElement.Rg:
+                case RoentgeniumElement.Roentgenium:
+                    element = new RoentgeniumElement();
                     break;
 
                 case RubidiumElement.Rb:
@@ -477,6 +602,11 @@ namespace Hadoken.Core.Elements
                     element = new RutheniumElement();
                     break;
 
+                case RutherfordiumElement.Rf:
+                case RutherfordiumElement.Rutherfordium:
+                    element = new RutherfordiumElement();
+                    break;
+
                 case SamariumElement.Sm:
                 case SamariumElement.Samarium:
                     element = new SamariumElement();
@@ -485,6 +615,11 @@ namespace Hadoken.Core.Elements
                 case ScandiumElement.Sc:
                 case ScandiumElement.Scandium:
                     element = new ScandiumElement();
+                    break;
+
+                case SeaborgiumElement.Sg:
+                case SeaborgiumElement.Seaborgium:
+                    element = new SeaborgiumElement();
                     break;
 
                 case SeleniumElement.Se:
@@ -497,11 +632,6 @@ namespace Hadoken.Core.Elements
                     element = new SiliconElement();
                     break;
 
-                case StrontiumElement.Sr:
-                case StrontiumElement.Strontium:
-                    element = new StrontiumElement();
-                    break;
-
                 case SilverElement.Ag:
                 case SilverElement.Silver:
                     element = new SilverElement();
@@ -510,6 +640,11 @@ namespace Hadoken.Core.Elements
                 case SodiumElement.Na:
                 case SodiumElement.Sodium:
                     element = new SodiumElement();
+                    break;
+
+                case StrontiumElement.Sr:
+                case StrontiumElement.Strontium:
+                    element = new StrontiumElement();
                     break;
 
                 case SulfurElement.S:
@@ -530,6 +665,11 @@ namespace Hadoken.Core.Elements
                 case TelluriumElement.Te:
                 case TelluriumElement.Tellurium:
                     element = new TelluriumElement();
+                    break;
+
+                case TennessineElement.Ts:
+                case TennessineElement.Tennessine:
+                    element = new TennessineElement();
                     break;
 
                 case TerbiumElement.Tb:
@@ -577,6 +717,11 @@ namespace Hadoken.Core.Elements
                     element = new VanadiumElement();
                     break;
 
+                case XenonElement.Xe:
+                case XenonElement.Xenon:
+                    element = new XenonElement();
+                    break;
+
                 case YtterbiumElement.Yb:
                 case YtterbiumElement.Ytterbium:
                     element = new YtterbiumElement();
@@ -585,11 +730,6 @@ namespace Hadoken.Core.Elements
                 case YttriumElement.Y:
                 case YttriumElement.Yttrium:
                     element = new YttriumElement();
-                    break;
-
-                case XenonElement.Xe:
-                case XenonElement.Xenon:
-                    element = new XenonElement();
                     break;
 
                 case ZincElement.Zn:
@@ -601,20 +741,6 @@ namespace Hadoken.Core.Elements
                 case ZirconiumElement.Zirconium:
                     element = new ZirconiumElement();
                     break;
-
-                default:
-                    if (_notHandled.Contains(value) == false)
-                    {
-                        _notHandled.Add(value);
-                    }
-                    //	Console.WriteLine(Value);
-                    //	Console.WriteLine();
-                    break;
-            }
-
-            if ((element == null) || ((element != null) && (element.Symbol != value)))
-            {
-                throw new Exception("Unhandled element");
             }
 
             return element;

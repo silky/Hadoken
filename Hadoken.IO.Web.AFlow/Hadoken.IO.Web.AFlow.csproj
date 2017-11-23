@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Hadoken.Core\Hadoken.Core.csproj" />
     <ProjectReference Include="..\Hadoken.IO.Web\Hadoken.IO.Web.csproj" />
   </ItemGroup>

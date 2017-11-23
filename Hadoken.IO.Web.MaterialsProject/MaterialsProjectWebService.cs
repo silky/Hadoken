@@ -30,7 +30,7 @@ namespace Hadoken.IO.Web.MaterialsProject
 
         private const string MaterialsProjectBaseUrl = "https://www.materialsproject.org/rest/v1/materials";
 
-        public override List<SearchResult> Search(string url)
+        private List<SearchResult> Search(string url)
         {
             List<SearchResult> searchResults = null;
 
@@ -52,9 +52,9 @@ namespace Hadoken.IO.Web.MaterialsProject
                     searchResults = materialsProjectSearchResults.Select(m => new SearchResult
                     (
                         m.BandGap,
+                        m.FullFormula,
                         0,
                         EGapType.Unknown,
-                        m.FullFormula,
                         String.Concat(CalculationVariable.FromPrototypeString(m.FullFormula).Select(n => (n.Element.Symbol)))
                     )).ToList();
                 }

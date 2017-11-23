@@ -291,7 +291,9 @@
 
 <p>&nbsp;</p>
 
-<p>Search Results:</p>
+@if (Model.SearchResults.Count > 0)
+{
+<p>Search Results: @Model.SearchResults.Count</p>
 
 <table cellpadding="3" cellspacing="0" border="0" width="100%" class="SearchResults">
 
@@ -305,10 +307,12 @@
 </tr>
 
 @{
+    int counter = 0;
+
     foreach (SearchResult searchResult in Model.SearchResults)
     {
 <tr>
-<td>&nbsp;</td>
+<td>@(++counter)</td>
 <td><a href="javascript:;">@searchResult.Compound</a></td>
 <td>@searchResult.Species</td>
 <td>@searchResult.BandGap</td>
@@ -321,3 +325,4 @@
 </table>
 
 <p>&nbsp;</p>
+}
