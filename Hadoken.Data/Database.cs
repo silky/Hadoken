@@ -13,12 +13,12 @@ namespace Hadoken.Data
 {
     public class Database : IDisposable
     {
-        public Database(string name)
+        protected Database(string name)
             : this(name, ConnectionFactory.NewDbConnection())
         {
         }
 
-        public Database(string name, DbConnection dbConnection)
+        protected Database(string name, DbConnection dbConnection)
         {
             _name = name;
             _dbConnection = dbConnection;
@@ -27,7 +27,15 @@ namespace Hadoken.Data
         private readonly DbConnection _dbConnection;
         private readonly string _name;
 
-        public void Create()
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
+        public virtual void Create()
         {
             OutputStreams.WriteLine("Creating database...");
 
@@ -62,14 +70,8 @@ namespace Hadoken.Data
             }
         }
 
-        public void Drop()
+        public virtual void Drop()
         {
-            OutputStreams.WriteLine("Dropping database...");
-
-            ExecuteNonQuery(_dbConnection, $"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '{_name}';");
-            ExecuteNonQuery(_dbConnection, $"DROP DATABASE IF EXISTS {_name};");
-
-            OutputStreams.WriteLine("Database dropped.");
         }
 
         public void ExecuteNonQuery(string commandText)
@@ -98,7 +100,7 @@ namespace Hadoken.Data
             }
         }
 
-        public bool IsExists()
+        public virtual bool IsExists()
         {
             bool isExists = false;
 

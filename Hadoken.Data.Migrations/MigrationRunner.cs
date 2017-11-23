@@ -31,16 +31,11 @@ namespace Hadoken.Data.Migrations
 
         private static readonly Assembly _assembly;
 
-        private const string MigrationSchemaName = "Migration";
-        private const string MigrationTableName = "State";
+        internal const string MigrationSchemaName = "Migration";
+        internal const string MigrationTableName = "State";
 
-        private int BumpMigrationState()
+        protected virtual int BumpMigrationState()
         {
-            using (DbCommand dbCommand = CommandFactory.NewTextCommand(_dbConnection, $"INSERT INTO {MigrationSchemaName}.{MigrationTableName} (Value) SELECT (COALESCE(MAX(Value), 0) + 1) FROM {MigrationSchemaName}.{MigrationTableName};"))
-            {
-                dbCommand.ExecuteNonQuery();
-            }
-
             return GetMigrationState();
         }
 
@@ -58,33 +53,12 @@ namespace Hadoken.Data.Migrations
             }
         }
 
-        private void CreateMigrationSchema()
+        protected virtual void CreateMigrationSchema()
         {
-            using (DbCommand dbCommand = CommandFactory.NewTextCommand(_dbConnection, $"CREATE SCHEMA IF NOT EXISTS {MigrationSchemaName} AUTHORIZATION postgres;"))
-            {
-                dbCommand.ExecuteNonQuery();
-            }
         }
 
-        private void CreateMigrationTable()
+        protected virtual void CreateMigrationTable()
         {
-            using (DbCommand dbCommand = CommandFactory.NewTextCommand(_dbConnection))
-            {
-                StringBuilder stringBuilder = new StringBuilder();
-
-                stringBuilder.AppendLine($"CREATE TABLE IF NOT EXISTS {MigrationSchemaName}.{MigrationTableName}");
-                stringBuilder.AppendLine("(");
-                stringBuilder.AppendLine("    ID serial NOT NULL PRIMARY KEY,");
-                stringBuilder.AppendLine("    Value integer NOT NULL,");
-                stringBuilder.AppendLine("    DateTime timestamp without time zone NOT NULL DEFAULT(now() at time zone 'utc')");
-                stringBuilder.AppendLine(")");
-                stringBuilder.AppendLine("WITH(OIDS = FALSE);");
-
-                stringBuilder.AppendLine($"ALTER TABLE {MigrationSchemaName}.{MigrationTableName} OWNER TO postgres;");
-
-                dbCommand.CommandText = stringBuilder.ToString();
-                dbCommand.ExecuteNonQuery();
-            }
         }
 
         public void Dispose()
@@ -123,35 +97,51 @@ namespace Hadoken.Data.Migrations
 
             foreach (Migration migration in migrations)
             {
-                MigrationAttribute migrationAttribute = migration.GetType().GetCustomAttributes().OfType<MigrationAttribute>().FirstOrDefault();
+                IEnumerable<Attribute> customAttributes = migration.GetType().GetCustomAttributes();
+                MigrationAttribute migrationAttribute = customAttributes.OfType<MigrationAttribute>().FirstOrDefault();
+                DataPlatformAttribute dataPlatformAttribute = customAttributes.OfType<DataPlatformAttribute>().FirstOrDefault();
+                DataPlatformType dataPlatformType = ((dataPlatformAttribute == null) ? DataPlatformType.Unknown : dataPlatformAttribute.DataPlatformType);
 
                 OutputStreams.WriteLine($"Found migration {migrationAttribute.Value}");
 
-                if ((migrationAttribute.Value > migrationState) && (migrationAttribute.IsIgnore == false))
+                if (dataPlatformType != DataPlatformType.Unknown)
                 {
-                    try
+                    if ((migrationAttribute.Value > migrationState) && (migrationAttribute.IsIgnore == false))
                     {
-                        OutputStreams.WriteLine($"Applying migration {migrationAttribute.Value}...");
+                        try
+                        {
+                            OutputStreams.WriteLine($"Applying migration {migrationAttribute.Value}...");
 
-                        migration.Apply();
+                            migration.Apply(dataPlatformType);
 
-                        migrationState = BumpMigrationState();
+                            migrationState = BumpMigrationState();
+                        }
+                        catch
+                        {
+                            migration.Rollback(dataPlatformType);
+
+                            throw;
+                        }
                     }
-                    catch
+                    else
                     {
-                        migration.Rollback();
-
-                        throw;
+                        OutputStreams.WriteLine($"Skipping migration {migrationAttribute.Value}...");
                     }
-                }
-                else
-                {
-                    OutputStreams.WriteLine($"Skipping migration {migrationAttribute.Value}...");
                 }
             }
         }
 
-        private int GetMigrationState()
+        internal void ExecuteNonQuery(string commandText)
+        {
+            Database.ExecuteNonQuery(_dbConnection, commandText);
+        }
+
+        internal DbDataReader ExecuteReader(string commandText)
+        {
+            return Database.ExecuteReader(_dbConnection, commandText);
+        }
+
+        protected virtual int GetMigrationState()
         {
             int getMigrationState = 0;
 
