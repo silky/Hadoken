@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 
+using Hadoken.Core;
 using Hadoken.Core.Elements;
 
 #endregion
@@ -25,15 +26,41 @@ namespace Hadoken.IO.Web
                 return _baseUrl;
             }
         }
-    
-        public virtual List<SearchResult> Search(string url)
-        {
-            return new List<SearchResult>();
-        }
 
         public virtual List<SearchResult> Search(List<Element> elements)
         {
             return new List<SearchResult>();
+        }
+
+        public static double ToDouble(string value)
+        {
+            double toDouble = 0;
+
+            if (String.IsNullOrEmpty(value) == false)
+            {
+                Double.TryParse(value, out toDouble);
+            }
+
+            return toDouble;
+        }
+
+        public static EGapType ToGapType(string value)
+        {
+            EGapType toGapType = EGapType.Unknown;
+
+            if (String.IsNullOrEmpty(value) == false)
+            {
+                object parsed = null;
+
+                Enum.TryParse(typeof(EGapType), value, out parsed);
+
+                if (parsed is EGapType)
+                {
+                    toGapType = (EGapType)(parsed);
+                }
+            }
+
+            return toGapType;
         }
     }
 }

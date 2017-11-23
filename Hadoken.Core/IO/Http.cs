@@ -12,42 +12,42 @@ namespace Hadoken.Core.IO
     {
         public const string UserAgent = "Mozilla/5.0 CMS (.NET Core 2.0) s3364859@student.rmit.edu.au";
 
-        public static string Get(string Url)
+        public static string Get(string url)
         {
-            return Get(Url, true);
+            return Get(url, true);
         }
 
-        public static string Get(string Url, string HeaderName, string HeaderValue)
+        public static string Get(string url, string headerName, string headerValue)
         {
-            return Get(Url, HeaderName, HeaderValue, true);
+            return Get(url, headerName, headerValue, true);
         }
 
-        public static string Get(string Url, bool IsLogToConsole)
+        public static string Get(string url, bool isLogToConsole)
         {
-            return Get(Url, "", "", IsLogToConsole);
+            return Get(url, "", "", isLogToConsole);
         }
 
-        public static string Get(string Url, string HeaderName, string HeaderValue, bool IsLogToConsole)
+        public static string Get(string url, string headerName, string headerValue, bool isLogToConsole)
         {
             string httpGet = "";
 
-            if (String.IsNullOrEmpty(Url) == false)
+            if (String.IsNullOrEmpty(url) == false)
             {
-                HttpWebRequest oHttpWebRequest = HttpWebRequest.CreateHttp(Url);
-                oHttpWebRequest.Method = "GET";
-                oHttpWebRequest.UserAgent = UserAgent;
+                HttpWebRequest httpWebRequest = HttpWebRequest.CreateHttp(url);
+                httpWebRequest.Method = "GET";
+                httpWebRequest.UserAgent = UserAgent;
 
-                if ((String.IsNullOrEmpty(HeaderName) == false) && (String.IsNullOrEmpty(HeaderValue) == false))
+                if ((String.IsNullOrEmpty(headerName) == false) && (String.IsNullOrEmpty(headerValue) == false))
                 {
-                    oHttpWebRequest.Headers.Add(HeaderName, HeaderValue);
+                    httpWebRequest.Headers.Add(headerName, headerValue);
                 }
 
-                if (IsLogToConsole == true)
+                if (isLogToConsole == true)
                 {
-                    OutputStreams.Write($"Downloading from {Url}...");
+                    OutputStreams.WriteLine($"Downloading from {url}...");
                 }
 
-                using (WebResponse httpWebResponse = oHttpWebRequest.GetResponseAsync().Result)
+                using (WebResponse httpWebResponse = httpWebRequest.GetResponseAsync().Result)
                 {
                     using (StreamReader streamReader = new StreamReader(httpWebResponse.GetResponseStream()))
                     {
@@ -55,9 +55,9 @@ namespace Hadoken.Core.IO
                     }
                 }
 
-                if (IsLogToConsole == true)
+                if (isLogToConsole == true)
                 {
-                    OutputStreams.WriteLine("Done", false);
+                    OutputStreams.WriteLine("Finished downloading");
                 }
             }
 

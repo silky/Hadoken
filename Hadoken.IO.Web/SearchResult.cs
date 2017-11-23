@@ -9,12 +9,12 @@ namespace Hadoken.IO.Web
 {
     public class SearchResult
     {
-        public SearchResult(double bandGap, double eGapFit, EGapType eGapType, string compound, string species)
+        public SearchResult(double bandGap, string compound, double eGapFit, EGapType eGapType, string species)
         {
             _bandGap = bandGap;
+            _compound = compound;
             _eGapFit = eGapFit;
             _eGapType = eGapType;
-            _compound = compound;
             _species = species;
         }
 
@@ -31,7 +31,6 @@ namespace Hadoken.IO.Web
                 return _bandGap;
             }
         }
-
 
         public string Compound
         {

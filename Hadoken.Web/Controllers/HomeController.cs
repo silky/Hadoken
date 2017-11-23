@@ -43,8 +43,7 @@ namespace Hadoken.Web.Controllers
 
             homeModel.ElementModels = elementRepository.SelectElements().Select(m => (ElementModel.ToElementModel(m))).ToList();
 
-            OutputStreams.WriteLine("[HttpPost] Home:");
-            homeModel.Symbols.ForEach(m => OutputStreams.WriteLine(m));
+            OutputStreams.WriteLine($"[HttpPost] Home: {String.Join(", ", homeModel.Symbols)}");
 
             if (ModelState.IsValid == true)
             {
@@ -52,20 +51,25 @@ namespace Hadoken.Web.Controllers
                 List<WebService> webServices = new List<WebService>(new WebService[] { new AFlowWebService(), new MaterialsProjectWebService() });
                 List<SearchResult> searchResults = new List<SearchResult>();
 
-                OutputStreams.WriteLine("Elements:");
-                elements.ForEach(m => OutputStreams.WriteLine(m));
-                OutputStreams.WriteLine();
+                OutputStreams.WriteLine($"Elements: {String.Join(", ", elements)}");
 
                 foreach (WebService webService in webServices)
                 {
-                    OutputStreams.WriteLine($"Searching {webService.BaseUrl}...");
-                    List<SearchResult> webServiceSearchResults = webService.Search(elements);
-                    OutputStreams.WriteLine($"{webServiceSearchResults.Count} search results");
-                    OutputStreams.WriteLine();
-                    
-                    if (webServiceSearchResults.Count > 0)
+                    try
                     {
-                        searchResults.AddRange(webServiceSearchResults);
+                        OutputStreams.WriteLine($"Searching {webService.BaseUrl}...");
+                        List<SearchResult> webServiceSearchResults = webService.Search(elements);
+                        OutputStreams.WriteLine($"{webServiceSearchResults.Count} search results");
+
+                        if (webServiceSearchResults.Count > 0)
+                        {
+                            searchResults.AddRange(webServiceSearchResults);
+                        }
+                    }
+                    catch (Exception exception)
+                    {
+                        OutputStreams.WriteLine();
+                        OutputStreams.WriteLine(exception.Message);
                     }
                 }
 
